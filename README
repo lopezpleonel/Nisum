@@ -1,0 +1,159 @@
+Simple SpringBoot Project - Persona Info
+
+First at all, in the package package com.example.demo.model you will find the class
+with all the fields of the person information validated with annotations.
+
+In order to create a person you should use the following URL:
+
+http://localhost:8080/personas/Insertar
+Making use of POST in Postman add the json with the information.
+For example: 
+
+{
+	"personName" : "Leonel",
+	"lastName" : "Lopez",
+	"addressHome" : "Rivas 1050",
+	"phoneNumber" : 9,
+	"hairColour" : "black"
+}
+
+{
+	"personName" : "Mary",
+	"lastName" : "Barbarino",
+	"addressHome" : "Rivas 1050",
+	"phoneNumber" : 9,
+	"hairColour" : "red"
+}
+
+{
+	"personName" : "Sebastian",
+	"lastName" : "Sanyhueza",
+	"addressHome" : "Moneda 1025",
+	"phoneNumber" : 7,
+	"hairColour" : "black"
+} 
+
+Later, use a GET with the following URL http://localhost:8080/personas/Listar
+You will see the Json response:
+[
+    {
+        "id": 1,
+        "personName": "Leonel",
+        "lastName": "Lopez",
+        "addressHome": "Rivas 1050",
+        "phoneNumber": 9,
+        "hairColour": "black"
+    },
+    {
+        "id": 2,
+        "personName": "Mary",
+        "lastName": "Barbarino",
+        "addressHome": "Rivas 1050",
+        "phoneNumber": 9,
+        "hairColour": "red"
+    },
+    {
+        "id": 3,
+        "personName": "Mary",
+        "lastName": "Barbarino",
+        "addressHome": "Rivas 1050",
+        "phoneNumber": 9,
+        "hairColour": "red"
+    }
+]
+
+Thus, you can update the person information with a PUT as shown below in the URL.
+http://localhost:8080/personas/Modificar/
+{
+    "id": 1,
+    "personName": "Leonel",
+    "lastName": "Lopez",
+    "addressHome": "Rivas 1050",
+    "phoneNumber": 982563115,
+    "hairColour": "black"
+}
+The changes are saved.
+
+Lastly, you can DELETE a person with the following URL:
+http://localhost:8080/personas/Eliminar/1
+
+View the remove transaction with the GET URL http://localhost:8080/personas/Listar
+and you will see the list with the 2 registers.
+
+[
+    {
+        "id": 2,
+        "personName": "Mary",
+        "lastName": "Barbarino",
+        "addressHome": "Rivas 1050",
+        "phoneNumber": 9,
+        "hairColour": "red"
+    },
+    {
+        "id": 3,
+        "personName": "Mary",
+        "lastName": "Barbarino",
+        "addressHome": "Rivas 1050",
+        "phoneNumber": 9,
+        "hairColour": "red"
+    }
+]
+
+Also, validations were created in the @Entity PersonInfo.
+For example:
+Execute a POST with the URL http://localhost:8080/personas/Insertar
+the Json is added with the green hair colour.
+
+{
+	"personName" : "Leonel",
+	"lastName" : "Lopez",
+	"addressHome" : "Rivas 1050",
+	"phoneNumber" : 9,
+	"hairColour" : "green"
+}
+And a 400 bad request is received with the following message:
+"Only hair colours black, red, yellow and white are allowed"
+
+{
+    "timestamp": "2019-11-23T07:29:40.372+0000",
+    "status": 400,
+    "error": "Bad Request",
+    "errors": [
+        {
+            "codes": [
+                "Pattern.personInfo.hairColour",
+                "Pattern.hairColour",
+                "Pattern.java.lang.String",
+                "Pattern"
+            ],
+            "arguments": [
+                {
+                    "codes": [
+                        "personInfo.hairColour",
+                        "hairColour"
+                    ],
+                    "arguments": null,
+                    "defaultMessage": "hairColour",
+                    "code": "hairColour"
+                },
+                [],
+                {
+                    "defaultMessage": "^(black|red|yellow|white)$",
+                    "arguments": null,
+                    "codes": [
+                        "^(black|red|yellow|white)$"
+                    ]
+                }
+            ],
+            "defaultMessage": "Only hair colours black, red, yellow and white are allowed",
+            "objectName": "personInfo",
+            "field": "hairColour",
+            "rejectedValue": "green",
+            "bindingFailure": false,
+            "code": "Pattern"
+        }
+    ],
+    "message": "Validation failed for object='personInfo'. Error count: 1",
+    "path": "/personas/Insertar"
+}
+
