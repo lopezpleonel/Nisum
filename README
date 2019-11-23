@@ -1,6 +1,6 @@
 Simple SpringBoot Project - Persona Info
 
-First at all, in the package package com.example.demo.model you will find the class
+First at all, in the package com.example.demo.model you will find the class
 with all the fields of the person information validated with annotations.
 
 In order to create a person you should use the following URL:
